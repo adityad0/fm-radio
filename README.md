@@ -14,7 +14,8 @@
 ## References
 1. Rotary encoder: [How Rotary Encoder Works and Interface It with Arduino (Last Minute Engineers)](https://lastminuteengineers.com/rotary-encoder-arduino-tutorial/)
 2. I2C LCD: [I2C Liquid Crystal Displays (arduino_uno_guy/Arduino)](https://projecthub.arduino.cc/arduino_uno_guy/i2c-liquid-crystal-displays-5eb615)
-3. Arduino I2C LCD Library Reference: [LiquidCrystal I2C](https://www.arduino.cc/reference/en/libraries/liquidcrystal-i2c/)
+3. Interfacing an I2C LCD with Arduino: [Interface an I2C LCD with Arduino (Last Minute Engineers)](https://lastminuteengineers.com/i2c-lcd-arduino-tutorial/)
+4. Arduino I2C LCD Library Reference: [LiquidCrystal I2C](https://www.arduino.cc/reference/en/libraries/liquidcrystal-i2c/)
 
 ## Libraries
 1. Flash storage library: [https://github.com/cmaglie/FlashStorage](https://github.com/cmaglie/FlashStorage)
