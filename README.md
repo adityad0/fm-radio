@@ -1,7 +1,7 @@
 # FM Radio
 ## Components
-1. Arduino UNO (Or another equivalent. I am using the SEEED Xiao SAMD21) [Buy]([https://link-url-here.org](https://shop.lynkrtech.com/product/seeeduino-xiao-samd21-microcontroller-arduino-compatible-cortex-m0/))
-2. LCD Display 16x2 [Buy]([https://link-url-here.org](https://shop.lynkrtech.com/product/16x2-lcd-blue-background-with-white-text-with-i2c-iic-interface/))
+1. Arduino UNO (Or another equivalent. I am using the SEEED Xiao SAMD21) [Buy](https://shop.lynkrtech.com/product/seeeduino-xiao-samd21-microcontroller-arduino-compatible-cortex-m0/)
+2. LCD Display 16x2 [Buy](https://shop.lynkrtech.com/product/16x2-lcd-blue-background-with-white-text-with-i2c-iic-interface/)
 3. Rotary Encoder [Buy](https://shop.lynkrtech.com/product/rotary-encoder-module-360-degree/)
 4. TEA5767 FM receiver module [Buy](https://shop.lynkrtech.com/?s=tea5767&post_type=product)
 
