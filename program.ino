@@ -23,10 +23,10 @@ saveFreq savedFreq;
 
 int currentStateCLK;
 int lastStateCLK;
+String currentDir ="";
 unsigned long lastButtonPress = 0;
 unsigned long lastRotatedTime = 0;
 const unsigned long backlightTimeout = 5000;
-int backlightState = 0;
 
 float current_freq = 76.0;
 
@@ -52,13 +52,10 @@ void setup() {
     lcd.init();
     lcd.clear();
     lcd.noBacklight();
-    lcd.backlight();
-    backlightState = 1;
     lcd.setCursor(0,0);
     lcd.print("FM Radio");
     lcd.setCursor(0,1);
     lcd.print("Freq: " + String(current_freq));
-    delay(1000);
 
     Wire.begin();
     radio.setFrequency(current_freq);
@@ -73,8 +70,6 @@ void loop() {
     currentStateCLK = digitalRead(CLK);
     if(currentStateCLK != lastStateCLK  && currentStateCLK == 1) {
         lastRotatedTime = millis();
-        lcd.backlight();
-        backlightState = 1;
         if(digitalRead(DT) != currentStateCLK) {
             Serial.println("RE moved clockwise");
             if(current_freq >= 108.0) {
@@ -93,7 +88,7 @@ void loop() {
             savedFreq.freqVal = current_freq;
             my_float_store.write(savedFreq);
         } else {
-            Serial.println("RE moved Anti-clockwise");
+            Serial.println("RE moved Counter-clockwise");
             if(current_freq <= 76.0) {
                 current_freq = 108.0;
             }
@@ -115,21 +110,17 @@ void loop() {
     int btnState = digitalRead(SW);
     if(btnState == LOW) {
         if(millis() - lastButtonPress > 50) {
-            lastRotatedTime = millis();
-            lcd.backlight();
-            backlightState = 1;
             Serial.println("RE Button pressed!");
             radio.setFrequency(current_freq);
         }
         lastButtonPress = millis();
     }
 
-    if(backlightState == 1) {
-        if(millis() - lastRotatedTime >= backlightTimeout) {
-            lcd.noBacklight();
-            Serial.println("Backlight OFF");
-            backlightState = 0;
-        }
+    // Check if the display backlight should be turned off
+    if(millis() - lastRotatedTime >= backlightTimeout) {
+        lcd.noBacklight();
+    } else {
+        lcd.backlight();
     }
 
     delay(1);
