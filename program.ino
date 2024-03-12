@@ -23,17 +23,18 @@ saveFreq savedFreq;
 
 int currentStateCLK;
 int lastStateCLK;
-String currentDir ="";
 unsigned long lastButtonPress = 0;
+unsigned long lastRotatedTime = 0;
+const unsigned long backlightTimeout = 5000;
+int backlightState = 0;
 
 float current_freq = 76.0;
 
 void setup() {
     Serial.begin(115200);
 
-    while(!Serial) {
-        Serial.print("Unable to start Serial!");
-        delay(1000);
+    if(!Serial) {
+        Serial.print("Serial not connected.");
     }
 
     savedFreq = my_float_store.read();
@@ -52,6 +53,7 @@ void setup() {
     lcd.clear();
     lcd.noBacklight();
     lcd.backlight();
+    backlightState = 1;
     lcd.setCursor(0,0);
     lcd.print("FM Radio");
     lcd.setCursor(0,1);
@@ -69,7 +71,10 @@ void setup() {
 
 void loop() {
     currentStateCLK = digitalRead(CLK);
-    if(currentStateCLK != lastStateCLK  && currentStateCLK == 1){
+    if(currentStateCLK != lastStateCLK  && currentStateCLK == 1) {
+        lastRotatedTime = millis();
+        lcd.backlight();
+        backlightState = 1;
         if(digitalRead(DT) != currentStateCLK) {
             Serial.println("RE moved clockwise");
             if(current_freq >= 108.0) {
@@ -110,10 +115,22 @@ void loop() {
     int btnState = digitalRead(SW);
     if(btnState == LOW) {
         if(millis() - lastButtonPress > 50) {
+            lastRotatedTime = millis();
+            lcd.backlight();
+            backlightState = 1;
             Serial.println("RE Button pressed!");
             radio.setFrequency(current_freq);
         }
         lastButtonPress = millis();
     }
+
+    if(backlightState == 1) {
+        if(millis() - lastRotatedTime >= backlightTimeout) {
+            lcd.noBacklight();
+            Serial.println("Backlight OFF");
+            backlightState = 0;
+        }
+    }
+
     delay(1);
 }
